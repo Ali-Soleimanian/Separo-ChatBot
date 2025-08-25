@@ -2,6 +2,16 @@ import streamlit as st
 from langchain_groq import ChatGroq
 from config.settings import settings
 
+
+llm = ChatGroq(
+    # model="llama3-70b-8192",
+    # model="llama-3.1-8b-instant",
+    model="openai/gpt-oss-120b",
+    api_key=settings.API_KEY,
+    temperature=0.7,
+)
+
+
 st.set_page_config(page_title="Separo ChatBot", page_icon="media/bot profile.png")
 
 st.markdown("""
@@ -39,16 +49,9 @@ with st.expander("Options"):
         choice3 = st.radio("Temperature", ["Low", "Medium", "High"], index=1)
 
 
-llm = ChatGroq(
-    # model="llama3-70b-8192",
-    # model="llama-3.1-8b-instant",
-    model="openai/gpt-oss-120b",
-    api_key=settings.API_KEY,
-    temperature=0.7,
-)
 
-
-if prompt := st.chat_input("Say something"):
+prompt = st.chat_input("Say something")
+if prompt:
     response = llm.invoke(prompt)
     st.chat_message("user", avatar="media/user profile.png").write(prompt)
     st.chat_message("assistant", avatar="media/bot profile.png").write(response.content)
