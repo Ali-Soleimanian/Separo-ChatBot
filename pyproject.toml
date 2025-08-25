@@ -16,7 +16,8 @@ dependencies = [
     "openai (>=1.101.0,<2.0.0)",
     "streamlit (>=1.48.1,<2.0.0)",
     "groq (>=0.31.0,<0.32.0)",
-    "langchain-groq (>=0.3.7,<0.4.0)"
+    "langchain-groq (>=0.3.7,<0.4.0)",
+    "streamlit-chat (>=0.1.1,<0.2.0)"
 ]
 
 
