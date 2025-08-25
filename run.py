@@ -75,3 +75,30 @@ if prompt:
     response = llm.invoke(full_prompt)
     st.chat_message("user", avatar="media/user profile.png").write(prompt)
     st.chat_message("assistant", avatar="media/bot profile.png").write(response.content)
+
+st.markdown("""
+<style>
+/* Push chat input a bit up */
+div[data-testid="stChatInput"] {
+    margin-bottom: 60px;
+}
+
+/* Footer style */
+.custom-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    background-color: #16a34a; /* bright green */
+    padding: 10px;
+    z-index: 9999;
+}
+</style>
+
+<div class="custom-footer">
+    🌱 Developed & Designed by <b>Ali Soleimanian
+</div>
+""", unsafe_allow_html=True)
