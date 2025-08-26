@@ -28,6 +28,8 @@ div[role=radiogroup] > label > div:first-child {
 </style>
 """, unsafe_allow_html=True)
 
+prompt = st.chat_input("Say something")
+
 with st.expander("Options"):
     col1, col2, col3 = st.columns(3, gap="large")
     with col1:
@@ -37,7 +39,6 @@ with st.expander("Options"):
     with col3:
         Temperature_choice = st.radio("Temperature", ["Low", "Medium", "High"], index=1)
 
-prompt = st.chat_input("Say something")
 
 if model_choice == "llama3-70b-8192":
     model_id = "llama3-70b-8192"
@@ -55,11 +56,13 @@ elif Temperature_choice == "Medium":
 elif Temperature_choice == "High":
     temperature_value = 1
 
+
 llm = ChatGroq(
     model=model_id,
     api_key=settings.API_KEY,
     temperature=temperature_value,
 )
+
 
 if prompt:
     if language_choice == "English":
@@ -75,6 +78,10 @@ if prompt:
     response = llm.invoke(full_prompt)
     st.chat_message("user", avatar="media/user profile.png").write(prompt)
     st.chat_message("assistant", avatar="media/bot profile.png").write(response.content)
+
+if "first_message" not in st.session_state:
+    st.session_state.first_message = True
+    st.chat_message("assistant", avatar="media/bot profile.png").write("Hello, Im Separo. Im ready to help you!")
 
 st.markdown("""
 <style>
