@@ -74,10 +74,18 @@ if prompt:
     elif language_choice == "France":
         pre_prompt = "I say any but you should answer in France: {}"
         full_prompt = pre_prompt.format(prompt)
+    else:
+        pre_prompt = "{}"
+
 
     response = llm.invoke(full_prompt)
     st.chat_message("user", avatar="media/user profile.png").write(prompt)
-    st.chat_message("assistant", avatar="media/bot profile.png").write(response.content)
+    assistant_msg = st.chat_message("assistant", avatar="media/bot profile.png")
+    if "$" in response.content or "\\" in response.content:
+        assistant_msg.markdown(response.content, unsafe_allow_html=True)
+    else:
+        assistant_msg.write(response.content)
+
 
 if "first_message" not in st.session_state:
     st.session_state.first_message = True
