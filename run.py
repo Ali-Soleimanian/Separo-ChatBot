@@ -78,13 +78,8 @@ if prompt:
 
 st.markdown("""
 <style>
-/* Push chat input a bit up */
-div[data-testid="stChatInput"] {
-    margin-bottom: 60px;
-}
-
-/* Footer style */
-.custom-footer {
+body::after {
+    content: "🌱 Developed & Designed by Ali Soleimanian";
     position: fixed;
     bottom: 0;
     left: 0;
@@ -92,13 +87,9 @@ div[data-testid="stChatInput"] {
     text-align: center;
     font-size: 14px;
     color: white;
-    background-color: #16a34a; /* bright green */
+    background: #16a34a;
     padding: 10px;
     z-index: 9999;
 }
 </style>
-
-<div class="custom-footer">
-    🌱 Developed & Designed by <b>Ali Soleimanian
-</div>
 """, unsafe_allow_html=True)
