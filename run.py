@@ -70,15 +70,19 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 
-for msg in st.session_state.messages:
-    if msg["role"] == "user":
-        st.chat_message("user", avatar="media/user profile.png").write(msg["content"])
+def generate_message(role, content):
+    if role == "user":
+        st.chat_message("user", avatar="media/user profile.png").write(content)
     else:
         assistant_msg = st.chat_message("assistant", avatar="media/bot profile.png")
-        if "$" in msg["content"] or "\\" in msg["content"]:
-            assistant_msg.markdown(msg["content"], unsafe_allow_html=True)
+        if "$" in content or "\\" in content:
+            assistant_msg.markdown(content, unsafe_allow_html=True)
         else:
-            assistant_msg.write(msg["content"])
+            assistant_msg.write(content)
+
+
+for msg in st.session_state.messages:
+    generate_message(msg["role"], msg["content"])
 
 
 if prompt:
@@ -99,12 +103,10 @@ if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.session_state.messages.append({"role": "assistant", "content": response.content})
 
-    st.chat_message("user", avatar="media/user profile.png").write(prompt)
-    assistant_msg = st.chat_message("assistant", avatar="media/bot profile.png")
-    if "$" in response.content or "\\" in response.content:
-        assistant_msg.markdown(response.content, unsafe_allow_html=True)
-    else:
-        assistant_msg.write(response.content)
+    generate_message("user", prompt)
+    generate_message("assistant", response.content)
+
+
 
 st.markdown("""
 <style>
