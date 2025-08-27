@@ -33,7 +33,7 @@ prompt = st.chat_input("Say something")
 with st.expander("Options"):
     col1, col2, col3 = st.columns(3, gap="large")
     with col1:
-        language_choice = st.radio("Language", ["English", "Persian", "France"], index=0)
+        language_choice = st.radio("Language", ["English", "Persian", "French"], index=0)
     with col2:
         model_choice = st.radio("Model", ["llama3-70b-8192", "llama-3.1-8b-instant", "openai/gpt-oss-120b"], index=1)
     with col3:
@@ -61,9 +61,13 @@ llm = ChatGroq(
     temperature=temperature_value,
 )
 
-if "first_message" not in st.session_state:
-    st.session_state.first_message = True
+
+if language_choice == "English":
     st.chat_message("assistant", avatar="media/bot profile.png").write("Hello, Im Separo. Im ready to help you!")
+elif language_choice == "Persian":
+    st.chat_message("assistant", avatar="media/bot profile.png").write("!سلام، من سپارو هستم. آماده‌ام که به شما کمک کنم")
+elif language_choice == "French":
+    st.chat_message("assistant", avatar="media/bot profile.png").write("Bonjour, je suis Separo. Je suis prêt à vous aider!")
 
 
 if "messages" not in st.session_state:
@@ -92,8 +96,8 @@ if prompt:
     elif language_choice == "Persian":
         pre_prompt = "I say any but you should answer in Persian: {}"
         full_prompt = pre_prompt.format(prompt)
-    elif language_choice == "France":
-        pre_prompt = "I say any but you should answer in France: {}"
+    elif language_choice == "French":
+        pre_prompt = "I say any but you should answer in French: {}"
         full_prompt = pre_prompt.format(prompt)
     else:
         pre_prompt = "{}"
