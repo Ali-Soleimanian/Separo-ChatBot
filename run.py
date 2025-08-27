@@ -61,13 +61,20 @@ llm = ChatGroq(
     temperature=temperature_value,
 )
 
+if "last_language" not in st.session_state:
+    st.session_state.last_language = None
 
-if language_choice == "English":
-    st.chat_message("assistant", avatar="media/bot profile.png").write("Hello, Im Separo. Im ready to help you!")
-elif language_choice == "Persian":
-    st.chat_message("assistant", avatar="media/bot profile.png").write("!سلام، من سپارو هستم. آماده‌ام که به شما کمک کنم")
-elif language_choice == "French":
-    st.chat_message("assistant", avatar="media/bot profile.png").write("Bonjour, je suis Separo. Je suis prêt à vous aider!")
+def show_first_message(language_choice):
+    if language_choice == "English":
+        st.chat_message("assistant", avatar="media/bot profile.png").write("Hello, Im Separo. Im ready to help you!")
+    elif language_choice == "Persian":
+        st.chat_message("assistant", avatar="media/bot profile.png").write("!سلام، من سپارو هستم. آماده‌ام که به شما کمک کنم")
+    elif language_choice == "French":
+        st.chat_message("assistant", avatar="media/bot profile.png").write("Bonjour, je suis Separo. Je suis prêt à vous aider!")
+
+if st.session_state.last_language != language_choice:
+    show_first_message(language_choice)
+    st.session_state.last_language = None
 
 
 if "messages" not in st.session_state:
