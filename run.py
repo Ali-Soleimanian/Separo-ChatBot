@@ -70,6 +70,17 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 
+for msg in st.session_state.messages:
+    if msg["role"] == "user":
+        st.chat_message("user", avatar="media/user profile.png").write(msg["content"])
+    else:
+        assistant_msg = st.chat_message("assistant", avatar="media/bot profile.png")
+        if "$" in msg["content"] or "\\" in msg["content"]:
+            assistant_msg.markdown(msg["content"], unsafe_allow_html=True)
+        else:
+            assistant_msg.write(msg["content"])
+
+
 if prompt:
     if language_choice == "English":
         pre_prompt = "I say any but you should answer in English: {}"
@@ -88,15 +99,12 @@ if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.session_state.messages.append({"role": "assistant", "content": response.content})
 
-    for msg in st.session_state.messages:
-        if msg["role"] == "user":
-            st.chat_message("user", avatar="media/user profile.png").write(msg["content"])
-        else:
-            assistant_msg = st.chat_message("assistant", avatar="media/bot profile.png")
-            if "$" in msg["content"] or "\\" in msg["content"]:
-                assistant_msg.markdown(msg["content"], unsafe_allow_html=True)
-            else:
-                assistant_msg.write(msg["content"])
+    st.chat_message("user", avatar="media/user profile.png").write(prompt)
+    assistant_msg = st.chat_message("assistant", avatar="media/bot profile.png")
+    if "$" in response.content or "\\" in response.content:
+        assistant_msg.markdown(response.content, unsafe_allow_html=True)
+    else:
+        assistant_msg.write(response.content)
 
 st.markdown("""
 <style>
