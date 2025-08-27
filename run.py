@@ -39,7 +39,6 @@ with st.expander("Options"):
     with col3:
         Temperature_choice = st.radio("Temperature", ["Low", "Medium", "High"], index=1)
 
-
 if model_choice == "llama3-70b-8192":
     model_id = "llama3-70b-8192"
 elif model_choice == "llama-3.1-8b-instant":
@@ -56,12 +55,19 @@ elif Temperature_choice == "Medium":
 elif Temperature_choice == "High":
     temperature_value = 1
 
-
 llm = ChatGroq(
     model=model_id,
     api_key=settings.API_KEY,
     temperature=temperature_value,
 )
+
+if "first_message" not in st.session_state:
+    st.session_state.first_message = True
+    st.chat_message("assistant", avatar="media/bot profile.png").write("Hello, Im Separo. Im ready to help you!")
+
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
 
 if prompt:
@@ -77,19 +83,20 @@ if prompt:
     else:
         pre_prompt = "{}"
 
-
     response = llm.invoke(full_prompt)
-    st.chat_message("user", avatar="media/user profile.png").write(prompt)
-    assistant_msg = st.chat_message("assistant", avatar="media/bot profile.png")
-    if "$" in response.content or "\\" in response.content:
-        assistant_msg.markdown(response.content, unsafe_allow_html=True)
-    else:
-        assistant_msg.write(response.content)
 
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append({"role": "assistant", "content": response.content})
 
-if "first_message" not in st.session_state:
-    st.session_state.first_message = True
-    st.chat_message("assistant", avatar="media/bot profile.png").write("Hello, Im Separo. Im ready to help you!")
+    for msg in st.session_state.messages:
+        if msg["role"] == "user":
+            st.chat_message("user", avatar="media/user profile.png").write(msg["content"])
+        else:
+            assistant_msg = st.chat_message("assistant", avatar="media/bot profile.png")
+            if "$" in msg["content"] or "\\" in msg["content"]:
+                assistant_msg.markdown(msg["content"], unsafe_allow_html=True)
+            else:
+                assistant_msg.write(msg["content"])
 
 st.markdown("""
 <style>
