@@ -1,6 +1,10 @@
 import streamlit as st
 from langchain_groq import ChatGroq
 from config.settings import settings
+from langchain.chains import LLMChain
+from langchain.memory import ConversationBufferMemory
+from langchain.prompts import PromptTemplate
+
 
 
 st.set_page_config(page_title="Separo ChatBot", page_icon="media/bot profile.png")
@@ -77,10 +81,6 @@ if st.session_state.last_language != language_choice:
     st.session_state.last_language = None
 
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-
 def generate_message(role, content):
     if role == "user":
         st.chat_message("user", avatar="media/user profile.png").write(content)
@@ -91,31 +91,41 @@ def generate_message(role, content):
         else:
             assistant_msg.write(content)
 
+if "memory" not in st.session_state:
+    st.session_state.memory = ConversationBufferMemory(
+        input_key="input",
+        memory_key="history",
+        return_messages=False)
 
-for msg in st.session_state.messages:
-    generate_message(msg["role"], msg["content"])
+multilang_prompt = PromptTemplate(
+    input_variables=["language", "history", "input"],
+    template = """You must answer only in {language}.
+This is the conversation so far:
+{history}
+User said: {input}
+and Never use LaTeX, formulas, or math markup. 
+Always give clean text output only.
+"""
+)
+conversation = LLMChain(
+    llm=llm,
+    memory=st.session_state.memory,
+    prompt=multilang_prompt
+)
+
+for msg in st.session_state.memory.chat_memory.messages:
+    if msg.type == "human":
+        generate_message("user", msg.content)
+    else:
+        generate_message("assistant", msg.content)
 
 
 if prompt:
-    if language_choice == "English":
-        pre_prompt = "I say any but you should answer in English: {}"
-        full_prompt = pre_prompt.format(prompt)
-    elif language_choice == "Persian":
-        pre_prompt = "I say any but you should answer in Persian: {}"
-        full_prompt = pre_prompt.format(prompt)
-    elif language_choice == "French":
-        pre_prompt = "I say any but you should answer in French: {}"
-        full_prompt = pre_prompt.format(prompt)
-    else:
-        pre_prompt = "{}"
 
-    response = llm.invoke(full_prompt)
-
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.session_state.messages.append({"role": "assistant", "content": response.content})
+    response = conversation.run(language=language_choice, input=prompt)
 
     generate_message("user", prompt)
-    generate_message("assistant", response.content)
+    generate_message("assistant", response)
 
 
 
