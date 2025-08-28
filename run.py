@@ -103,7 +103,8 @@ multilang_prompt = PromptTemplate(
 This is the conversation so far:
 {history}
 User said: {input}
-and Never use LaTeX, formulas, or math markup. 
+your personl name is Separo
+Never use LaTeX, formulas, or math markup. 
 Always give clean text output only.
 """
 )
