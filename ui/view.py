@@ -27,20 +27,21 @@ def setup_page():
     """, unsafe_allow_html=True)
 
 
-st.markdown("""
-<style>
-body::after {
-    content: "🌱 Developed & Designed by Ali Soleimanian";
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
-    color: white;
-    background: #16a34a;
-    padding: 10px;
-    z-index: 9999;
-}
-</style>
-""", unsafe_allow_html=True)
+    with st.container():
+            st.markdown("""
+            <style>
+            body::after {
+                content: "🌱 Developed & Designed by Ali Soleimanian";
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                font-size: 14px;
+                color: white;
+                background: #16a34a;
+                padding: 10px;
+                z-index: 9999;
+            }
+            </style>
+            """, unsafe_allow_html=True)

@@ -7,11 +7,11 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
 
-def setup_model(model_id, temperature_value):
+def setup_model(model_id, assistant_mode_value):
     llm = ChatGroq(
         model=model_id,
         api_key=settings.API_KEY,
-        temperature=temperature_value,
+        temperature=0.7
     )
     return llm
 
@@ -23,14 +23,17 @@ def setup_conversation(llm):
             return_messages=False)
 
     multilang_prompt = PromptTemplate(
-        input_variables=["language", "history", "input"],
-        template = """You must answer only in {language}.
-    This is the conversation so far:
+        input_variables=["language", "history", "input", "mode"],
+        template = """
+    assistant your name is Separo
+    You must answer only in {language}.
+    The conversation so far:
     {history}
     User said: {input}
-    your personl name is Separo
-    Never use LaTeX, formulas, or math markup. 
-    Always give clean text output only.
+
+    Do not use LaTeX, formulas, or math markup.
+    Always provide clear and simple text output.
+    you are {mode} use Emojis about it
     """
     )
     conversation = LLMChain(

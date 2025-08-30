@@ -7,8 +7,8 @@ from core.chat import generate_message, show_chat_history, show_first_message
 
 def main():
     setup_page()
-    language_choice, model_id, temperature_valu = get_options()
-    llm = setup_model(model_id, temperature_valu)
+    language_choice, model_id, assistant_mode_choice = get_options()
+    llm = setup_model(model_id, assistant_mode_choice)
     conversation = setup_conversation(llm=llm)
     show_first_message(language_choice)
     setup_conversation(llm)
@@ -17,7 +17,7 @@ def main():
     prompt = st.chat_input("Say something")
     if prompt:
     
-        response = conversation.run(language=language_choice, input=prompt)
+        response = conversation.run(language=language_choice, input=prompt, mode=assistant_mode_choice)
 
         generate_message("user", prompt)
         generate_message("assistant", response)
