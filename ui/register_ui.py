@@ -1,12 +1,12 @@
 import streamlit as st
 from ui.ui_functions import footer, header
+from core.auth_core import register
 import time
-from core.auth import register
 
 
 
 def show_register():
-    result = None
+    regiter_result = None
     st.set_page_config(page_title="Separo Register", page_icon="media/bot profile.png")
 
     header()
@@ -19,10 +19,10 @@ def show_register():
 
     with col1:
         if st.button('Register'):
-            result = register(username=get_register_username, password=get_register_password)
-    if result is not None:
-        if result:
-            st.success("you are registerd successfuly, please login")
+            regiter_result = register(username=get_register_username, password=get_register_password)
+    if regiter_result is not None:
+        if regiter_result:
+            st.success("you are registerd successfully, please login")
             time.sleep(3)
             st.session_state.show_login = True
             st.session_state.show_register = False

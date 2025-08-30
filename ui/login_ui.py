@@ -1,8 +1,11 @@
 import streamlit as st
 from ui.ui_functions import footer, header
+from core.auth_core import login
+import time
 
 
 def show_login():
+    login_result = None
     st.set_page_config(page_title="Separo Login", page_icon="media/bot profile.png")
 
     header()
@@ -14,7 +17,14 @@ def show_login():
     col1, col2 = st.columns([1, 7])
 
     with col1:
-        login_button = st.button('Login')
+        if st.button('Login'):
+            login_result = login(username=get_login_username, password=get_ligin_password)
+    if login_result is not None:
+        if login_result:
+            st.session_state.show_login = False
+            st.success("you are logedin successfully")
+            st.session_state.loged_in = True
+            st.rerun()
 
     with col2:
         if st.button("Haven't registered? Register now"):
@@ -33,4 +43,4 @@ def show_login():
 
     footer()
 
-    return get_login_username, get_ligin_password, login_button
+    return get_login_username, get_ligin_password

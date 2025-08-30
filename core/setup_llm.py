@@ -1,6 +1,5 @@
 import streamlit as st
 from langchain_groq import ChatGroq
-from config.options import get_options
 from config.settings import settings
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import PromptTemplate
