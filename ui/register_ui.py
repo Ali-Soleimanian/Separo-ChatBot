@@ -6,6 +6,7 @@ from core.auth import register
 
 
 def show_register():
+    result = None
     st.set_page_config(page_title="Separo Register", page_icon="media/bot profile.png")
 
     header()
@@ -18,15 +19,17 @@ def show_register():
 
     with col1:
         if st.button('Register'):
-            register(username=get_register_username, password=get_register_password)
-            if st.session_state.existing_user:
-                st.error("username already exsist!")
-            else:
-                st.success("you are registerd successfuly, pleas login")
-                time.sleep(3)
-                st.session_state.show_login = True
-                st.session_state.show_register = False
-                st.rerun()
+            result = register(username=get_register_username, password=get_register_password)
+    if result is not None:
+        if result:
+            st.success("you are registerd successfuly, please login")
+            time.sleep(3)
+            st.session_state.show_login = True
+            st.session_state.show_register = False
+            st.rerun()
+        else:
+                st.error("username already exist")
+
 
     with col2:
         if st.button("Allready registerd? login now"):

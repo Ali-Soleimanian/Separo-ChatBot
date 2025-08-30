@@ -11,9 +11,6 @@ if 'show_login' not in st.session_state:
 if 'show_register' not in st.session_state:
     st.session_state.show_register = False
 
-if "existing_user" not in st.session_state:
-    st.session_state.existing_user = False
-
 
 def main():
     if st.session_state.show_login:
