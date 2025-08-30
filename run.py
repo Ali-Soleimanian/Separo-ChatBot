@@ -1,6 +1,6 @@
 import streamlit as st
 from core.setup_llm import setup_conversation, setup_model
-from ui.view import setup_page
+from ui.chat_ui import setup_page
 from config.options import get_options
 from core.chat import generate_message, show_chat_history, show_first_message
 

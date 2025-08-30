@@ -1,7 +1,7 @@
 import streamlit as st
 
-def setup_page():
-    st.set_page_config(page_title="Separo ChatBot", page_icon="media/bot profile.png")
+def main_menu():
+    st.set_page_config(page_title="Separo Login", page_icon="media/bot profile.png")
 
     st.markdown("""
     <h1 style="text-align:center; font-size:50px;">
@@ -16,15 +16,26 @@ def setup_page():
 
     st.write("")
     st.write("")
+    st.write("")
+    st.write("")
+
 
     st.markdown("""
-    <style>
-    div[role=radiogroup] > label > div:first-child {
-        background-color: #22c55e !important;
-        border: 2px solid #16a34a !important;
-    }
-    </style>
+        <style>
+        .stButton>button {
+            width: 650px;
+            height: 50px;
+        }
+        </style>
     """, unsafe_allow_html=True)
+
+    if st.button("Login and enjoy your own future"):
+        st.session_state.show_login = True
+        st.rerun()
+
+    if st.button("Register and Start your journey"):
+        st.session_state.show_register = True
+        st.rerun()
 
 
     with st.container():
@@ -45,3 +56,4 @@ def setup_page():
             }
             </style>
             """, unsafe_allow_html=True)
+
