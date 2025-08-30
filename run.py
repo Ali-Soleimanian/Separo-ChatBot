@@ -1,8 +1,8 @@
 import streamlit as st
-from setup_llm import setup_conversation, setup_model
-from view import setup_page
-from options import get_options
-from chat import generate_message, show_chat_history, show_first_message
+from core.setup_llm import setup_conversation, setup_model
+from ui.view import setup_page
+from config.options import get_options
+from core.chat import generate_message, show_chat_history, show_first_message
 
 
 def main():
