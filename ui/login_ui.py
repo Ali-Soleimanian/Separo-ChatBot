@@ -25,6 +25,8 @@ def show_login():
             st.success("you are logedin successfully")
             st.session_state.loged_in = True
             st.rerun()
+        else:
+            st.error("credentials wrong")
 
     with col2:
         if st.button("Haven't registered? Register now"):

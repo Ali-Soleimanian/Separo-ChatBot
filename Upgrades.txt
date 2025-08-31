@@ -1,0 +1,37 @@
+Separo upgrades from 24Aug to 31Aug:       
+
+# temporary chat history created
+
+# temporary chatbot memory created
+
+# the project became functional
+
+# temperature changed to conversation mode
+
+# the project became modular
+
+# login / registration created
+
+# login / registration based on a database
+
+# Some bugs were fixed
+
+-------- cool updates coming soon --------
+
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢾⣿⠉⠻⣷⣶⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣾⣿⣶⣼⣿⣷⣤⡀⠉⠙⠛⠿⠿⢷⣶⣤⡀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠹⣷⣌⣉⣉⡉⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⢿⣦⡀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⠏⠀⠀⠀⡠⠀⠉⠈⠁⠢⡀⠀⣠⣿⣧⣤⣄⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢠⣿⠏⠀⠀⠀⠠⠀⠀⣾⣿⣷⠀⢰⣾⠏⠉⠈⠙⢿⣷⡀
+⠀⠀⠀⠀⠀⠀⠀⣾⡟⠀⠀⠀⠀⢠⠀⠀⠙⠛⠋⠀⣼⡇⠀⠀⠀⠀  ⠀⣿⡇
+⠀⠀⠀⠀⠀⠀⢸⣿⠇⠀⠀⠀⠀⠀⠂⡀⠀⠀⠀⡀⣿⠿⠶⣶⣦⣤  ⡀⣿⡇
+⠀⠀⠀⠀⠀⠀⣼⣿⣠⣤⣤⣤⣀⠀⠀⠈⠁⠀⠉⠀⢻⣧⣤⣴⣿⢿⣿⣿⠃
+⠀⠀⠀⠀⠀⣴⣿⠟⠋⠉⠉⠉⠙⢿⣦⠀⠀⠀⠀⠀⠀⠙⣿⡏⠁⠈⠛⠁⠀
+⠀⠀⠀⢠⣾⡿⠁⠀⠀⠀⠀⠀⠀⠀⢿⣇⠀⠀⠀⠀⠀⠀⣿⣧⠀⠀⠀⠀⠀
+⠀⠀⢀⣾⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⠀⠀⠀⠀⠀⣸⣿⠀⠀⠀⠀⠀
+⠀⠀⣼⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⡏⠀⠀⠀⠀⠀⠀⣿⡟⠀⠀⠀⠀⠀
+⠀⣰⣿⠃⠀⠀⣰⠃⠀⠀⣰⠃⢀⣴⡟⠁⠀⠀⠀⠀⠀⣼⣿⠁⠀⠀⠀⠀⠀
+⢀⣿⠏⠀⣠⣾⠃⠀⣠⣾⣃⣴⡿⠋⠀⠀⠀⠀⠀⣠⣾⡿⠁⠀⠀⠀⠀⠀⠀
+⣾⣿⣴⣾⣿⣤⣶⣿⣿⣿⣟⣉⣀⣀⣀⣀⣤⣴⣿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀
+⠙⠛⠛⠛⠛⠛⠛⠉⠛⠛⠛⠛⠛⠛⠛⠛⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
