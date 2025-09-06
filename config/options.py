@@ -2,20 +2,6 @@ import streamlit as st
 from core.auth_core import get_user_api_key, update_user_api_key, logout_user, delete_user_account
 
 
-def check_api_key_available():
-    """Check if API key is available from user database or session state"""
-    if st.session_state.get("loged_in") and st.session_state.get("username"):
-        username = st.session_state.get("username")
-        api_key = get_user_api_key(username)
-        if api_key:
-            return True
-    
-    if st.session_state.get("api_key"):
-        return True
-    
-    return False
-
-
 def get_options():
     with st.container():
         st.markdown("#### 🔑 API Configuration")
@@ -39,17 +25,14 @@ def get_options():
                 username = st.session_state.get("username")
                 if update_user_api_key(username, api_key):
                     st.success("API key saved to your profile!")
-                    if "api_error" in st.session_state:
-                        del st.session_state.api_error
                 else:
                     st.error("Failed to save API key")
             else:
                 st.session_state.api_key = api_key
                 st.success("API key saved!")
-                if "api_error" in st.session_state:
-                    del st.session_state.api_error
         else:
-            st.warning("Please enter your API key to use the chat.")
+            st.error("⚠️ **API Key Required** - Please enter your Groq API key to use the chat.")
+            st.info("💡 **Tip:** You can get a free API key from [console.groq.com](https://console.groq.com)")
     
     st.divider()
     
@@ -71,20 +54,9 @@ def get_options():
         model_choice = st.selectbox(
             "Select Model",
             [
+                "llama-3.3-70b-versatile",
                 "llama-3.1-8b-instant",
-                "llama-3.1-70b-versatile",
-                "llama-3.1-8b-versatile",
-                "mixtral-8x7b-32768",
-                "mixtral-8x22b-32768",
-                "mistral-7b-instruct",
-                "mixtral-8x7b-instruct",
-                "llama-3.2-11b-vision-instruct",
-                "llama-3.2-90b-vision-instruct",
-                "codestral-latest",
-                "deepseek-coder-6.7b-instruct",
-                "llama-3.3-70b-instruct",
-                "gemma-2-9b-it",
-                "gemma-2-27b-it"
+                "openai/gpt-oss-120b"
             ],
             index=0,
             label_visibility="collapsed"

@@ -59,8 +59,8 @@ README.md
 *.log
 logs/
 
-# Database files (if you want to persist data externally)
-data.db
+# Database files (will be created in container and persisted via volume)
+# data.db
 
 # Temporary files
 tmp/

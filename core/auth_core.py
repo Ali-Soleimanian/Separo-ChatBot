@@ -49,12 +49,27 @@ def get_user_api_key(username):
 
 
 def logout_user():
-    """Logout user by clearing session state"""
-    # Clear all session state variables
-    keys_to_clear = ["loged_in", "username", "api_key", "api_error"]
+    """Logout user by clearing all session state and temporary memories"""
+    keys_to_clear = [
+        "loged_in", 
+        "username", 
+        "api_key", 
+        "memory", 
+        "last_language",
+        "show_login",
+        "show_register", 
+        "show_delete_confirmation"
+    ]
+    
     for key in keys_to_clear:
         if key in st.session_state:
             del st.session_state[key]
+    
+    remaining_keys = list(st.session_state.keys())
+    for key in remaining_keys:
+        if key not in ["show_login", "show_register", "loged_in"]:
+            del st.session_state[key]
+    
     return True
 
 
@@ -63,10 +78,28 @@ def delete_user_account(username, password):
     if len(password) < 6:
         return "password_too_short"
     
-    # Verify password before deletion
     user = session.query(User).filter_by(username=username, password=password).first()
     if user:
         session.delete(user)
         session.commit()
+        keys_to_clear = [
+            "loged_in", 
+            "username", 
+            "api_key", 
+            "memory", 
+            "last_language",
+            "show_login",
+            "show_register", 
+            "show_delete_confirmation"
+        ]
+        
+        for key in keys_to_clear:
+            if key in st.session_state:
+                del st.session_state[key]
+        
+        remaining_keys = list(st.session_state.keys())
+        for key in remaining_keys:
+            if key not in ["show_login", "show_register", "loged_in"]:
+                del st.session_state[key]
         return True
     return "invalid_password"

@@ -3,6 +3,8 @@ from ui.ui_functions import footer
 from core.setup_llm import setup_conversation, setup_model
 from config.options import get_options
 from core.chat_core import run_conversation
+from config.settings import settings
+
 
 def setup_page():
     st.set_page_config(page_title="Separo ChatBot", page_icon="media/bot profile.png")
@@ -37,7 +39,6 @@ def show_first_message(language_choice):
     if "last_language" not in st.session_state:
         st.session_state.last_language = None
     if st.session_state.last_language != language_choice:
-        # Welcome messages in different languages
         welcome_messages = {
             "English": "Hello, I'm Separo. I'm ready to help you!",
             "Persian": "!سلام، من سپارو هستم. آماده‌ام که به شما کمک کنم",
@@ -97,33 +98,26 @@ def show_chat_history():
 def run_chat():
     setup_page()
     
-    # Create sidebar for options (always visible)
     with st.sidebar:
         st.markdown("### Chat Options")
         language_choice, model_id, assistant_mode_choice = get_options()
-        
-        # Add retry button if there was an API error
-        if st.session_state.get("api_error"):
-            st.markdown("---")
-            if st.button("🔄 Retry Connection", type="primary"):
-                st.session_state.api_error = False
-                st.rerun()
-    
-    # Check if API key is available
-    from config.settings import settings
     
     api_key = settings.get_api_key()
     if not api_key:
-        st.warning("Please configure your API key in the Options section to start chatting.")
-        return
-    
-    # Check if there was a previous API error
-    if st.session_state.get("api_error"):
-        st.error("There was an error with your API key. Please check the Options section and click 'Retry Connection'.")
+        st.warning("⚠️ **API Key Required**")
+        st.info("Please configure your Groq API key in the Options section to start chatting.")
+        st.markdown("""
+        **How to get your API key:**
+        1. Go to [console.groq.com](https://console.groq.com)
+        2. Sign up or log in to your account
+        3. Navigate to API Keys section
+        4. Create a new API key
+        5. Copy and paste it in the Options section above
+        """)
         return
     
     try:
-        llm = setup_model(model_id, assistant_mode_choice)
+        llm = setup_model(model_id)
         conversation = setup_conversation(llm=llm)
         show_first_message(language_choice)
         setup_conversation(llm)
@@ -136,4 +130,3 @@ def run_chat():
             show_message("assistant", response)
     except Exception as e:
         st.error(f"Unexpected error: {str(e)}")
-        st.session_state.api_error = True

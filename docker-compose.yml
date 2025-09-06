@@ -4,9 +4,8 @@ services:
     image: separo-streamlit:1.5.0
     ports:
       - "8501:8501"
-
     volumes:
-      - ./data.db:/app/data.db
+      - db_data:/app/data.db
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
@@ -14,3 +13,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+
+volumes:
+  db_data:
