@@ -24,6 +24,7 @@ def show_login():
             st.session_state.show_login = False
             st.success("you are logedin successfully")
             st.session_state.loged_in = True
+            st.session_state.username = get_login_username  # Store username for API key retrieval
             st.rerun()
         else:
             st.error("credentials wrong")

@@ -21,14 +21,16 @@ def show_register():
         if st.button('Register'):
             regiter_result = register(username=get_register_username, password=get_register_password)
     if regiter_result is not None:
-        if regiter_result:
+        if regiter_result == True:
             st.success("you are registerd successfully, please login")
             time.sleep(3)
             st.session_state.show_login = True
             st.session_state.show_register = False
             st.rerun()
-        else:
-                st.error("username already exist")
+        elif regiter_result == "username_exists":
+            st.error("username already exist")
+        elif regiter_result == "password_too_short":
+            st.error("password must be at least 6 characters long")
 
 
     with col2:

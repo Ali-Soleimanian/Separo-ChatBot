@@ -8,17 +8,16 @@ def setup_page():
     st.set_page_config(page_title="Separo ChatBot", page_icon="media/bot profile.png")
 
     st.markdown("""
-    <h1 style="text-align:center; font-size:50px;">
+    <h1 style="text-align:center; font-size:45px; margin-top: 0; margin-bottom: 10px;">
     Welcome to <span style="
         background: linear-gradient(to right, green 25%, red);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-size:57px;
+        font-size:52px;
     ">Separo</span> ChatBot
     </h1>
     """, unsafe_allow_html=True)
 
-    st.write("")
     st.write("")
 
     st.markdown("""
@@ -38,12 +37,42 @@ def show_first_message(language_choice):
     if "last_language" not in st.session_state:
         st.session_state.last_language = None
     if st.session_state.last_language != language_choice:
-        if language_choice == "English":
-            st.chat_message("assistant", avatar="media/bot profile.png").write("Hello, I'm Separo. I'm ready to help you!")
-        elif language_choice == "Persian":
-            st.chat_message("assistant", avatar="media/bot profile.png").write("!سلام، من سپارو هستم. آماده‌ام که به شما کمک کنم")
-        elif language_choice == "French":
-            st.chat_message("assistant", avatar="media/bot profile.png").write("Bonjour, je suis Separo. Je suis prêt à vous aider!")
+        # Welcome messages in different languages
+        welcome_messages = {
+            "English": "Hello, I'm Separo. I'm ready to help you!",
+            "Persian": "!سلام، من سپارو هستم. آماده‌ام که به شما کمک کنم",
+            "French": "Bonjour, je suis Separo. Je suis prêt à vous aider!",
+            "Spanish": "¡Hola, soy Separo. Estoy listo para ayudarte!",
+            "German": "Hallo, ich bin Separo. Ich bin bereit, dir zu helfen!",
+            "Italian": "Ciao, sono Separo. Sono pronto ad aiutarti!",
+            "Portuguese": "Olá, eu sou Separo. Estou pronto para ajudá-lo!",
+            "Russian": "Привет, я Сепаро. Я готов помочь вам!",
+            "Chinese": "你好，我是Separo。我准备好帮助你了！",
+            "Japanese": "こんにちは、私はSeparoです。お手伝いする準備ができています！",
+            "Korean": "안녕하세요, 저는 Separo입니다. 도움을 드릴 준비가 되어 있습니다!",
+            "Arabic": "مرحباً، أنا سبارو. أنا مستعد لمساعدتك!",
+            "Hindi": "नमस्ते, मैं Separo हूं। मैं आपकी मदद के लिए तैयार हूं!",
+            "Turkish": "Merhaba, ben Separo. Size yardım etmeye hazırım!",
+            "Dutch": "Hallo, ik ben Separo. Ik ben klaar om je te helpen!",
+            "Swedish": "Hej, jag är Separo. Jag är redo att hjälpa dig!",
+            "Norwegian": "Hei, jeg er Separo. Jeg er klar til å hjelpe deg!",
+            "Danish": "Hej, jeg er Separo. Jeg er klar til at hjælpe dig!",
+            "Polish": "Cześć, jestem Separo. Jestem gotowy, aby Ci pomóc!",
+            "Czech": "Ahoj, jsem Separo. Jsem připraven ti pomoci!",
+            "Hungarian": "Helló, én vagyok Separo. Készen állok segíteni neked!",
+            "Greek": "Γεια σας, είμαι ο Separo. Είμαι έτοιμος να σας βοηθήσω!",
+            "Hebrew": "שלום, אני Separo. אני מוכן לעזור לך!",
+            "Thai": "สวัสดี ฉันคือ Separo ฉันพร้อมที่จะช่วยคุณ!",
+            "Vietnamese": "Xin chào, tôi là Separo. Tôi sẵn sàng giúp đỡ bạn!",
+            "Indonesian": "Halo, saya Separo. Saya siap membantu Anda!",
+            "Malay": "Halo, saya Separo. Saya bersedia membantu anda!",
+            "Filipino": "Kumusta, ako si Separo. Handa akong tumulong sa iyo!",
+            "Ukrainian": "Привіт, я Сепаро. Я готовий допомогти вам!",
+            "Romanian": "Salut, sunt Separo. Sunt gata să te ajut!"
+        }
+        
+        message = welcome_messages.get(language_choice, welcome_messages["English"])
+        st.chat_message("assistant", avatar="media/bot profile.png").write(message)
 
 
 def show_message(role, content):
@@ -67,15 +96,44 @@ def show_chat_history():
 
 def run_chat():
     setup_page()
-    language_choice, model_id, assistant_mode_choice = get_options()
-    llm = setup_model(model_id, assistant_mode_choice)
-    conversation = setup_conversation(llm=llm)
-    show_first_message(language_choice)
-    setup_conversation(llm)
-    show_chat_history()
+    
+    # Create sidebar for options (always visible)
+    with st.sidebar:
+        st.markdown("### Chat Options")
+        language_choice, model_id, assistant_mode_choice = get_options()
+        
+        # Add retry button if there was an API error
+        if st.session_state.get("api_error"):
+            st.markdown("---")
+            if st.button("🔄 Retry Connection", type="primary"):
+                st.session_state.api_error = False
+                st.rerun()
+    
+    # Check if API key is available
+    from config.settings import settings
+    
+    api_key = settings.get_api_key()
+    if not api_key:
+        st.warning("Please configure your API key in the Options section to start chatting.")
+        return
+    
+    # Check if there was a previous API error
+    if st.session_state.get("api_error"):
+        st.error("There was an error with your API key. Please check the Options section and click 'Retry Connection'.")
+        return
+    
+    try:
+        llm = setup_model(model_id, assistant_mode_choice)
+        conversation = setup_conversation(llm=llm)
+        show_first_message(language_choice)
+        setup_conversation(llm)
+        show_chat_history()
 
-    prompt = st.chat_input("Say something")
-    if prompt:
-        response = run_conversation(conversation, language_choice, prompt, assistant_mode_choice)
-        show_message("user", prompt)
-        show_message("assistant", response)
+        prompt = st.chat_input("Say something")
+        if prompt:
+            response = run_conversation(conversation, language_choice, prompt, assistant_mode_choice)
+            show_message("user", prompt)
+            show_message("assistant", response)
+    except Exception as e:
+        st.error(f"Unexpected error: {str(e)}")
+        st.session_state.api_error = True
