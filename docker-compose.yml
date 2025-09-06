@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  langchain-chat:
+  separo-streamlit:
     build: .
     ports:
       - "8501:8501"
