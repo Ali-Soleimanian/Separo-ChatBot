@@ -1,8 +1,7 @@
-version: '3.8'
-
 services:
   separo-streamlit:
     build: .
+    image: separo-streamlit:1.5.0
     ports:
       - "8501:8501"
 
