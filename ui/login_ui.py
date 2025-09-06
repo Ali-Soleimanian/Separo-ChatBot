@@ -10,7 +10,7 @@ def show_login():
 
     header()
 
-    st.subheader("Pleas login into your account")
+    st.subheader("Please login into your account")
     get_login_username = st.text_input("Username",autocomplete="off")
     get_ligin_password = st.text_input("Password",type="password", autocomplete="off")
 

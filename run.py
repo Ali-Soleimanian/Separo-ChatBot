@@ -6,8 +6,6 @@ from ui.chat_ui import run_chat
 
 
 
-
-
 def main():
     if 'show_login' not in st.session_state:
         st.session_state.show_login = False

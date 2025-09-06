@@ -39,7 +39,7 @@ def show_first_message(language_choice):
         st.session_state.last_language = None
     if st.session_state.last_language != language_choice:
         if language_choice == "English":
-            st.chat_message("assistant", avatar="media/bot profile.png").write("Hello, Im Separo. Im ready to help you!")
+            st.chat_message("assistant", avatar="media/bot profile.png").write("Hello, I'm Separo. I'm ready to help you!")
         elif language_choice == "Persian":
             st.chat_message("assistant", avatar="media/bot profile.png").write("!سلام، من سپارو هستم. آماده‌ام که به شما کمک کنم")
         elif language_choice == "French":
