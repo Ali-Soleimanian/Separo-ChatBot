@@ -1,4 +1,4 @@
-# Separo ChatBot (sematic parrot)
+# Separo ChatBot (semantic parrot)
 
 Separo is a multi-language chatbot powered by [LangChain](https://github.com/langchain-ai/langchain), [Streamlit](https://streamlit.io/), and Groq API. It offers user authentication, customizable assistant personalities, and supports over 30 languages.
 
