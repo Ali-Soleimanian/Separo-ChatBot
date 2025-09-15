@@ -24,7 +24,7 @@ Separo is a multi-language chatbot powered by [LangChain](https://github.com/lan
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/separo.git
+    git clone https://github.com/Ali-Soleimanian/Separo-ChatBot.git
     cd separo
     ```
 
